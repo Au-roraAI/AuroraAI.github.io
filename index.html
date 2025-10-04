@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="AuroraAI — vaporwave-coded AI playground. Coming soon / わくわく" />
+  <title>AuroraAI — Coming soon / わくわく</title>
+
+  <!-- Bootstrap & jQuery -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Pixel-y font for the logo / headings -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --vw-pink:#ff71ce;
+      --vw-purple:#b967ff;
+      --vw-cyan:#01cdfe;
+      --vw-yellow:#fffb96;
+      --vw-blue:#4b6bfb;
+      --bg-dark:#0a0620;
+      --card-bg: rgba(10,6,32,0.65);
+      --glass: rgba(255,255,255,0.08);
+      --shadow: 0 15px 35px rgba(0,0,0,.45), 0 5px 15px rgba(0,0,0,.25);
+    }
+
+    html, body { height: 100%; }
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 700px at 70% 20%, rgba(255,255,255,.07), transparent 60%),
+                  radial-gradient(900px 600px at 10% 80%, rgba(255,255,255,.06), transparent 60%),
+                  conic-gradient(from 180deg at 50% 50%, var(--vw-purple), var(--vw-pink), var(--vw-cyan), var(--vw-yellow), var(--vw-purple));
+      background-blend-mode: screen, screen, normal;
+      color: #f7f7ff;
+      overflow-x: hidden;
+      animation: hueShift 16s linear infinite;
+    }
+
+    /* Subtle VHS scanlines */
+    body::before{
+      content:""; position: fixed; inset:0; pointer-events:none; z-index:0;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 2px, transparent 4px),
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,.06), transparent 40%),
+        radial-gradient(circle at 80% 90%, rgba(255,255,255,.04), transparent 40%);
+      mix-blend-mode: overlay;
+      opacity:.5;
+    }
+
+    /* Neon grid at the bottom */
+    .neon-grid{
+      position: fixed; left:0; right:0; bottom:-40vh; height: 80vh; z-index: 0;
+      background: 
+        linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,.15) 30%, rgba(0,0,0,.4) 60%, rgba(0,0,0,.75) 100%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.15) 0 2px, transparent 2px 60px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.15) 0 2px, transparent 2px 60px);
+      transform: perspective(900px) rotateX(60deg) scale(1.4);
+      filter: drop-shadow(0 0 18px rgba(185,103,255,.55));
+      animation: gridGlow 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes gridGlow { from { opacity:.35; } to { opacity:.7; } }
+    @keyframes hueShift { to { filter: hue-rotate(360deg); } }
+    @keyframes floaty { 0%{ transform: translateY(0) } 50%{ transform: translateY(-8px) } 100%{ transform: translateY(0) } }
+    @keyframes softPulse { 0%,100%{ opacity:.9; text-shadow: 0 0 0 rgba(255,255,255,0)} 50%{ opacity:1; text-shadow: 0 0 18px rgba(255,255,255,.35)} }
+
+    /* Header/Hero */
+    .hero{ position: relative; z-index:1; padding-top: 8rem; padding-bottom: 5rem; }
+    .logo-wrap{ display:flex; align-items:center; gap:1rem; }
+
+    .logo-square{
+      width: 96px; height: 96px; border-radius: 16px;
+      background: linear-gradient(135deg, #ff004c, #ff8a00, #ffe600, #25ff6a, #00e5ff, #7a5fff);
+      background-size: 300% 300%; animation: hueShift 12s linear infinite;
+      box-shadow: 0 8px 30px rgba(255,113,206,.45), inset 0 0 18px rgba(255,255,255,.35);
+      display:grid; place-items:center; position:relative;
+    }
+    .logo-A{ font-family: 'Press Start 2P', monospace; color:#fff; font-size: 56px; line-height:1; filter: drop-shadow(0 0 10px rgba(255,255,255,.7)); }
+
+    .brand-title{ font-family:'Press Start 2P', cursive; font-size: clamp(22px, 4vw, 38px); letter-spacing:2px; }
+    .brand-kicker{ color:#eaeaff; opacity:.9; font-weight:600; animation: softPulse 3.5s ease-in-out infinite; }
+
+    /* Glass cards */
+    .glass-card{ background: var(--card-bg); border: 1px solid rgba(255,255,255,.14); border-radius: 20px; box-shadow: var(--shadow); backdrop-filter: blur(8px); }
+    .glass-card .card-header{ background: linear-gradient(90deg, rgba(255,113,206,.2), rgba(1,205,254,.15)); border-bottom: 1px solid rgba(255,255,255,.1);} 
+
+    /* Gradient text helper */
+    .gradient-text{ background: linear-gradient(90deg, var(--vw-pink), var(--vw-purple), var(--vw-cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* Buttons */
+    .btn-neon{ border-radius: 999px; border:1px solid rgba(255,255,255,.25); background: linear-gradient(90deg, rgba(255,113,206,.25), rgba(1,205,254,.2)); color:#fff; backdrop-filter: blur(8px); box-shadow: inset 0 0 12px rgba(255,255,255,.1), 0 8px 24px rgba(0,0,0,.25); }
+    .btn-neon:hover{ transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.35), inset 0 0 16px rgba(255,255,255,.15); }
+
+    /* Sections */
+    section{ position: relative; z-index:1; }
+    .section-title{ font-family:'Press Start 2P', cursive; font-size: clamp(16px, 2vw, 22px); letter-spacing:1px; margin-bottom: 1.25rem; }
+
+    /* Footer */
+    footer{ color:#cfcff7; opacity:.85; }
+
+    /* Tiny badges */
+    .badge-chip{ background: rgba(255,255,255,.1); color:#fff; border:1px solid rgba(255,255,255,.2); border-radius:999px; padding:.35rem .6rem; font-size:.8rem }
+
+    /* Copyable code block */
+    pre.code{ background: rgba(0,0,0,.35); color:#fff; padding: 1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,.15); overflow:auto; }
+
+    /* Easter egg wink */
+    .wink{ display:inline-block; transform: rotate(-2deg); animation: floaty 6s ease-in-out infinite; }
+
+    /* Extra vibes toggle intensifies background */
+    .extra-vibes body, body.extra-vibes{
+      animation-duration: 9s;
+    }
+    body.extra-vibes .neon-grid{ animation-duration: 3.5s }
+
+    /* Link styling */
+    a.link-soft{ color: #ffe1fd; text-decoration-color: rgba(255,255,255,.35); }
+    a.link-soft:hover{ color: #ffffff; text-decoration-color: rgba(255,255,255,.75); }
+
+    /* Utilities */
+    .opacity-85{ opacity:.85 }
+  </style>
+</head>
+<body>
+  <div class="neon-grid" aria-hidden="true"></div>
+
+  <header class="hero container">
+    <div class="row align-items-center justify-content-between g-4">
+      <div class="col-lg-7">
+        <div class="logo-wrap mb-3">
+          <div class="logo-square" aria-hidden="true">
+            <span class="logo-A">A</span>
+          </div>
+          <div>
+            <h1 class="brand-title m-0 gradient-text">AuroraAI</h1>
+            <p class="brand-kicker m-0">coming soon / わくわく ✨</p>
+          </div>
+        </div>
+        <p class="lead opacity-85 mt-4">
+          A tiny, indie, vaporwave-flavored playground for LLM-powered web sims. No ads, no nonsense, just vibes.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <button id="notifyBtn" class="btn btn-neon btn-lg px-4">Get notified</button>
+          <a class="btn btn-outline-light btn-lg px-4" href="#faq">FAQ</a>
+          <button id="vibeToggle" class="btn btn-outline-light btn-lg px-4" title="Turn the vibes to 11">Extra vibes</button>
+        </div>
+        <div class="mt-3 small text-white-50">AGPL-3.0 • donations-powered • built by <span class="fw-bold">@yet_another_account123</span> <span class="wink">(solo dev)</span></div>
+      </div>
+      <div class="col-lg-5">
+        <div class="glass-card p-4">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h2 class="h6 m-0">Bring your own OpenRouter Key</h2>
+            <span class="badge-chip">optional</span>
+          </div>
+          <p class="mb-3">Paste your key to preview how AuroraAI stores it locally. <em>We don't send anything anywhere on this page.</em></p>
+          <div class="input-group mb-2">
+            <span class="input-group-text">sk-or-</span>
+            <input id="apiKey" type="password" class="form-control" placeholder="your-openrouter-key..." aria-label="OpenRouter API Key">
+            <button class="btn btn-neon" id="saveKey">Save</button>
+          </div>
+          <div class="form-text text-white-50">Saved to <code>localStorage</code>. Remove anytime.</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container pb-5">
+    <!-- Features -->
+    <section class="mb-5" id="features">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="glass-card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+              <div class="section-title m-0">Main features</div>
+              <span class="badge-chip">we heard you</span>
+            </div>
+            <div class="card-body pt-3">
+              <ul class="list-unstyled m-0">
+                <li class="mb-3">💎 <strong>More models, actually free.</strong> Not just a single "mini" model — use a wide range of LLMs without paywalls.</li>
+                <li class="mb-3">🌆 <strong>Vaporwave aesthetics everywhere.</strong> Neon gradients, scanlines, and synth glow baked in.</li>
+                <li class="mb-3">🔑 <strong>BYO OpenRouter API key.</strong> Power users can pay-as-you-go and lift limits.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="glass-card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+              <div class="section-title m-0">Known drawbacks</div>
+              <span class="badge-chip">honesty hour</span>
+            </div>
+            <div class="card-body pt-3">
+              <ul class="list-unstyled m-0">
+                <li class="mb-3">🧠 <strong>LLMs only in-app.</strong> No built-in TTS or image gen — those use non-OpenRouter APIs.</li>
+                <li class="mb-3">🗄️ <strong>Hosted on free Vercel.</strong> Storage is tight, and <u>old unused projects may be deleted</u>. <strong>Back up everything.</strong></li>
+                <li class="mb-2">📦 <strong>No asset library or social feed.</strong> Less server storage, more focus.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Similar Projects -->
+    <section class="mb-5" id="similar">
+      <div class="glass-card p-4">
+        <div class="section-title">Similar indie projects (no corpo slop)</div>
+        <ul class="mb-0">
+          <li class="mb-2">🐈‍⬛ <strong>catsim</strong> by <em>@raduflame</em> — server: <a class="link-soft" href="https://discord.gg/ed9QBKE3B5" target="_blank" rel="noopener">discord invite</a></li>
+          <li class="mb-2">🌐 <strong>netsim</strong> by <em>@kennet678</em> — private for now (be kind, DM for updates)</li>
+          <li class="mb-0">🤠 <strong>wildwest.gg</strong> by <em>khoi</em> — shut down 🪦 but not forgotten</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Quick Start (mock) -->
+    <section class="mb-5" id="quickstart">
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="glass-card p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="section-title m-0">OpenRouter demo</div>
+              <button class="btn btn-sm btn-neon" id="copyCurl">Copy cURL</button>
+            </div>
+            <p class="mb-2">This is how AuroraAI chats — swap in your key and any model you like.</p>
+            <pre class="code" id="curlBlock">curl https://openrouter.ai/api/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_OPENROUTER_KEY" \
+  -d '{
+    "model": "openrouter/auto",
+    "messages": [
+      {"role":"system","content":"You are AuroraAI helper."},
+      {"role":"user","content":"hello from the vaporwave web"}
+    ]
+  }'
+</pre>
+            <div class="text-white-50 small">Tip: Use <code>openrouter/auto</code> or specify any supported model you prefer.</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="glass-card p-4 h-100">
+            <div class="section-title">Why AGPL-3.0?</div>
+            <p class="mb-0">Free as in <em>gratis</em> and <em>libre</em>. Fork, run, remix — but if you host it, you share your changes too. Fair vibes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="mb-5">
+      <div class="glass-card p-4">
+        <div class="section-title">FAQ</div>
+        <div class="accordion" id="faqAcc">
+          <div class="accordion-item bg-transparent text-white border border-light-subtle">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q1">
+                Q: Who made AuroraAI?
+              </button>
+            </h2>
+            <div id="q1" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body">AuroraAI is developed entirely by one person! <strong>@yet_another_account123</strong> on Discord.</div>
+            </div>
+          </div>
+          <div class="accordion-item bg-transparent text-white border border-light-subtle">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q2">
+                Q: Is this free?
+              </button>
+            </h2>
+            <div id="q2" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body">
+                Free as in <em>gratis</em>? Absolutely — use <strong>any</strong> LLM model without payment, ads, or nonsense. Advanced users can plug their own OpenRouter key to pay usage themselves and lift limits. Free as in <em>libre</em>? Also yes: licensed under <strong>AGPL-3.0</strong> so you can run, modify, and redistribute, and hosted instances must share their changes too.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item bg-transparent text-white border border-light-subtle">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q3">
+                Q: How do you afford this?
+              </button>
+            </h2>
+            <div id="q3" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body">AuroraAI is entirely donations-based, like Scratch. (Donate button soon™)</div>
+            </div>
+          </div>
+          <div class="accordion-item bg-transparent text-white border border-light-subtle">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q4">
+                Q: Where is your code?
+              </button>
+            </h2>
+            <div id="q4" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+              <div class="accordion-body">Code will live in the <strong>AuroraAI</strong> org on GitHub when development starts. Stay tuned.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="container pb-5">
+    <div class="glass-card p-3 d-flex flex-wrap align-items-center justify-content-between">
+      <div class="small">© <span id="year"></span> AuroraAI — AGPL-3.0 • indie • vaporwave • わくわく</div>
+      <div class="d-flex gap-2">
+        <a class="btn btn-sm btn-neon" href="#" aria-disabled="true">GitHub (soon)</a>
+        <a class="btn btn-sm btn-outline-light" href="#" aria-disabled="true">Docs (soon)</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Newsletters/notify mock
+    $('#notifyBtn').on('click', function(){
+      const email = prompt('Drop your email (totally optional):');
+      if(email){
+        // Just a front-end demo — normally you'd POST to your backend.
+        localStorage.setItem('aurora_notify', email);
+        alert('You\'re on the list. See you on the neon side. ✨');
+      } else {
+        alert('All good! Follow the project later if you change your mind.');
+      }
+    });
+
+    // Extra vibes toggle
+    $('#vibeToggle').on('click', function(){
+      document.body.classList.toggle('extra-vibes');
+      this.textContent = document.body.classList.contains('extra-vibes') ? 'Vibes maxed' : 'Extra vibes';
+    });
+
+    // Save API key locally (never uploaded)
+    $('#saveKey').on('click', function(){
+      const v = $('#apiKey').val().trim();
+      if(!v){ alert('Nothing to save.'); return; }
+      localStorage.setItem('openrouter_key', v);
+      $('#apiKey').val('');
+      alert('Key saved to localStorage. You can remove it anytime in your browser settings.');
+    });
+
+    // Copy cURL snippet
+    $('#copyCurl').on('click', function(){
+      const $el = $('#curlBlock');
+      const range = document.createRange();
+      range.selectNode($el[0]);
+      const sel = window.getSelection();
+      sel.removeAllRanges(); sel.addRange(range);
+      try{ document.execCommand('copy'); $(this).text('Copied!'); }
+      catch(e){ console.warn(e); }
+      sel.removeAllRanges();
+      setTimeout(()=>$(this).text('Copy cURL'), 1200);
+    });
+  </script>
+</body>
+</html>
