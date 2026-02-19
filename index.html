@@ -3,146 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuroraAI - わくわく</title>
-    <link rel="stylesheet" href="https://unpkg.com/7.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <title>AuroraAI | わくわく</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --accent-neon: #00ffcc;
+            --rebel-pink: #ff0055;
+            --text-main: #e0e0e0;
+            --border-style: 2px solid var(--accent-neon);
+        }
+
         body {
-            background-color: #008080; /* Iconic Win95 Teal */
-            font-family: "MS Sans Serif", "Arial", sans-serif;
-            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        .desktop-icon {
-            width: 60px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            text-align: center;
-            color: white;
-            text-shadow: 1px 1px #000;
+
+        /* Glitch Effect for Title */
+        .glitch {
+            font-weight: 700;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0.05em 0 0 var(--rebel-pink), -0.05em -0.025em 0 var(--accent-neon);
+            animation: glitch 1s infinite;
         }
-        .desktop-icon img {
-            display: block;
-            margin: 0 auto 5px;
-            width: 32px;
-            height: 32px;
+
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 var(--rebel-pink), -0.05em -0.025em 0 var(--accent-neon); }
+            14% { text-shadow: 0.05em 0 0 var(--rebel-pink), -0.05em -0.025em 0 var(--accent-neon); }
+            15% { text-shadow: -0.05em -0.025em 0 var(--rebel-pink), 0.025em 0.035em 0 var(--accent-neon); }
+            49% { text-shadow: -0.05em -0.025em 0 var(--rebel-pink), 0.025em 0.035em 0 var(--accent-neon); }
+            50% { text-shadow: 0.025em 0.05em 0 var(--rebel-pink), 0.05em 0 0 var(--accent-neon); }
+            100% { text-shadow: -0.025em 0.05em 0 var(--rebel-pink), -0.05em -0.025em 0 var(--accent-neon); }
         }
-        .window {
-            margin-bottom: 20px;
-            max-width: 800px;
+
+        .navbar {
+            border-bottom: var(--border-style);
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
         }
-        .status-bar-field {
-            font-size: 12px;
-        }
-        .marquee-container {
-            background: #000;
-            color: #0f0;
-            padding: 5px;
-            font-family: 'Courier New', Courier, monospace;
-            border: 2px inset #ffffff;
-        }
-        .atarashi-tag {
-            background: #ff0000;
-            color: white;
-            padding: 2px 5px;
+
+        .btn-rebel {
+            background: transparent;
+            color: var(--accent-neon);
+            border: var(--border-style);
+            border-radius: 0;
+            padding: 10px 25px;
             font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-rebel:hover {
+            background: var(--accent-neon);
+            color: #000;
+            box-shadow: 0 0 20px var(--accent-neon);
+        }
+
+        .btn-edge {
+            border-color: var(--rebel-pink);
+            color: var(--rebel-pink);
+        }
+
+        .btn-edge:hover {
+            background: var(--rebel-pink);
+            color: #fff;
+            box-shadow: 0 0 20px var(--rebel-pink);
+        }
+
+        .section-card {
+            background: #111;
+            border-left: 5px solid var(--accent-neon);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #333;
+            padding: 15px 0;
+        }
+
+        .faq-q {
+            color: var(--accent-neon);
+            font-weight: bold;
+        }
+
+        .badge-indie {
+            background: #222;
+            border: 1px solid var(--rebel-pink);
+            color: var(--rebel-pink);
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .footer {
+            border-top: var(--border-style);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .warning-text {
+            color: var(--rebel-pink);
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .kanji {
+            color: var(--rebel-pink);
         }
     </style>
 </head>
 <body>
 
-<div class="container-fluid">
-    <div class="desktop-icon" onclick="alert('AuroraAI Client v1.0 - Access Denied: Under Development')">
-        <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" alt="PC">
-        <span>My Computer</span>
+<nav class="navbar navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand glitch" href="#">AuroraAI</a>
+        <span class="navbar-text d-none d-md-block">
+            わくわく — Coming Soon
+        </span>
     </div>
+</nav>
 
-    <div class="window mx-auto">
-        <div class="title-bar">
-            <div class="title-bar-text">AuroraAI_Lander.exe - わくわく</div>
-            <div class="title-bar-controls">
-                <button aria-label="Minimize"></button>
-                <button aria-label="Maximize"></button>
-                <button aria-label="Close"></button>
-            </div>
+<header class="container mt-5 pt-5 text-center">
+    <h1 class="display-1 glitch">AuroraAI</h1>
+    <p class="lead mt-3">Web creation without the corporate slop. Custom models. Custom feeds. Your rules.</p>
+    
+    <div class="mt-5 d-flex flex-wrap justify-content-center gap-3">
+        <a href="https://auroraai.github.io/atarashi" class="btn btn-rebel btn-edge">Use Beta (Atarashi <span class="kanji">新しい</span>)</a>
+        <a href="https://discord.gg/pdUEVEQ6cB" class="btn btn-rebel" target="_blank">Discord</a>
+        <a href="https://stt.gg/6AAqkPCp" class="btn btn-rebel" target="_blank">Stoat</a>
+    </div>
+    <p class="mt-3 warning-text small">WARNING: Atarashi is in active development. Only for those who love living on the edge.</p>
+</header>
+
+<main class="container mt-5">
+    
+    <section id="features" class="section-card">
+        <h2 class="glitch mb-4">Core Features</h2>
+        <ul class="list-unstyled">
+            <li class="mb-3">🚀 <strong>More Models:</strong> No more GPT-5 mini junk. Access everything without the websim credit gate.</li>
+            <li class="mb-3">🎨 <strong>Custom Feeds:</strong> Stop letting us choose your categories. Build the feed <em>you</em> want to see.</li>
+            <li class="mb-3">🔍 <strong>Prompt Search:</strong> Stop wrangling keywords. Just tell the AI what project you're looking for.</li>
+            <li class="mb-3">🔑 <strong>BYOK:</strong> Plug in your OpenRouter API key and take full control.</li>
+        </ul>
+    </section>
+
+    <section id="faq" class="section-card">
+        <h2 class="glitch mb-4">The FAQ (Five W's Diet 🥗)</h2>
+        
+        <h3 class="mt-4 text-decoration-underline">WHAT</h3>
+        <div class="faq-item">
+            <p class="faq-q">What is AuroraAI?</p>
+            <p>A website creator, inspired by websim, that helps you generate or build websites using AI.</p>
         </div>
-        <div class="window-body">
-            <div class="text-center mb-4">
-                <h1 style="font-size: 2.5rem; font-weight: bold;">AURORA AI</h1>
-                <p>The anti-corpo, pro-customization AI playground.</p>
-                <div class="marquee-container">
-                    <marquee>COMING SOON ... 新しい (ATARASHI) VERSION IN PROGRESS ... BYOK SUPPORT ENABLED ... NO MORE GPT-5 MINI SLOP ...</marquee>
+        <div class="faq-item">
+            <p class="faq-q">What does “BYOK” mean?</p>
+            <p>“Bring Your Own Key” — you provide your OpenRouter API key. You pay for what you use, no hidden fees.</p>
+        </div>
+        <div class="faq-item">
+            <p class="faq-q">Is it free?</p>
+            <p><strong>Gratis:</strong> Maybe. If you use free models on OpenRouter, yes. <br> 
+               <strong>Libre:</strong> Yes. AGPL-3.0 licensed. Open source or bust.</p>
+        </div>
+        <div class="faq-item">
+            <p class="faq-q">What is Atarashi (<span class="kanji">新しい</span>)?</p>
+            <p>It means "New." It's our upgraded client. The old <code>auroraai-client</code> is dead to us now.</p>
+        </div>
+
+        <h3 class="mt-5 text-decoration-underline">WHO</h3>
+        <div class="faq-item">
+            <p class="faq-q">Who runs this joint?</p>
+            <p>A solo dev operation: <strong>@yet_another_account123</strong> (Discord), <strong>@UniqueName54321</strong> (GitHub).</p>
+        </div>
+
+        <h3 class="mt-5 text-decoration-underline">WHEN / WHERE / WHY</h3>
+        <div class="faq-item">
+            <p class="faq-q">Where is the code?</p>
+            <p>It’ll be hosted in the <strong>AuroraAI org</strong> on GitHub. Watch that space.</p>
+        </div>
+        <div class="faq-item">
+            <p class="faq-q">Why the Japanese?</p>
+            <p>Because anime is life and the language looks cool. Simple as that.</p>
+        </div>
+        <div class="faq-item">
+            <p class="faq-q">Why no desktop app?</p>
+            <p>We make websites. A desktop version is a "maybe someday" that's currently a lightyear away.</p>
+        </div>
+    </section>
+
+    <section id="indie" class="section-card">
+        <h2 class="glitch mb-4">Indie Support (No Corpo Slop)</h2>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="p-3 border border-secondary h-100">
+                    <h5>Catsim <span class="badge-indie">WIP</span></h5>
+                    <p>By @raduflame. <br><a href="https://discord.gg/ed9QBKE3B5" class="text-info">Discord Server</a></p>
                 </div>
             </div>
-
-            <div class="tabs">
-                <menu role="tablist">
-                    <li role="tab" aria-selected="true"><a href="#features">Features</a></li>
-                    <li role="tab"><a href="#faq">FAQ</a></li>
-                    <li role="tab"><a href="#devlog">Dev Log</a></li>
-                </menu>
-                <div class="window" role="tabpanel">
-                    <div class="window-body" id="tab-content">
-                        <h3>Why AuroraAI?</h3>
-                        <ul>
-                            <li><strong>Unlimited Models:</strong> Stop being stuck with trash-tier free models. If it's on OpenRouter, you can use it.</li>
-                            <li><strong>True Customization:</strong> Your vibe, your settings, your rules.</li>
-                            <li><strong>BYOK (Bring Your Own Key):</strong> Full transparency and control over your API costs.</li>
-                            <li><strong>AGPL-3.0 Licensed:</strong> Libre, open, and forever community-focused.</li>
-                        </ul>
-                        <p>Shoutout to the indie legends: <strong>catsim</strong> (@raduflame) and <strong>netsim</strong> (@kennet678). RIP wildwest.gg.</p>
-                    </div>
+            <div class="col-md-4 mb-3">
+                <div class="p-3 border border-secondary h-100">
+                    <h5>Netsim <span class="badge-indie">Public</span></h5>
+                    <p>By @kennet678. <br><a href="https://netsim.us.to/" class="text-info">Web Client</a></p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="p-3 border border-secondary h-100">
+                    <h5>Wildwest.gg <span class="badge-indie text-muted" style="border-color:#444">Shut Down :(</span></h5>
+                    <p>By Khoi. You can't make anything anymore, but RIP legend. <br><a href="https://wildwest.gg" class="text-info">Website</a></p>
                 </div>
             </div>
         </div>
-        <div class="status-bar">
-            <p class="status-bar-field">Developer: @yet_another_account123</p>
-            <p class="status-bar-field">Status: Vibe Coding 新しい</p>
-            <p class="status-bar-field">CPU: 100% hyped</p>
-        </div>
-    </div>
+    </section>
 
-    <div class="window mx-auto" style="max-width: 600px;">
-        <div class="title-bar">
-            <div class="title-bar-text">Help_Topics.hlp</div>
-        </div>
-        <div class="window-body">
-            <details>
-                <summary>What is 新しい / Atarashi?</summary>
-                <p class="mt-2">It's the new version of the client! The old <code>auroraai-client</code> was unworkable. We had to rebuild it to make it actually succeed.</p>
-            </details>
-            <details>
-                <summary>Is this vibe coded?</summary>
-                <p class="mt-2">Rn? Yes. Long term? No. We aren't trying to have security holes you could drive a truck through.</p>
-            </details>
-            <details>
-                <summary>Where is the code?</summary>
-                <p class="mt-2">It'll be hosted on the <strong>AuroraAI GitHub Org</strong>. Keep your eyes peeled.</p>
-            </details>
-        </div>
+    <section class="section-card" style="border-left-color: var(--rebel-pink);">
+        <h2 class="glitch mb-4">Lore & Fun Facts</h2>
+        <ul class="small">
+            <li>In development since ~Nov 2025.</li>
+            <li>Official screenshot leaked (by me) on Dec 29, 2025, in the Websim Discord.</li>
+            <li>Was originally vaporwave themed, but we went modern to avoid looking like a "grift." Still miss the aesthetic though.</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="footer text-center">
+    <div class="container">
+        <p class="mb-1">AuroraAI: The org. | auroraai.github.io: The site. | Atarashi: The future.</p>
+        <p class="small text-muted">No sugar-coating. Just code. © 2026 AuroraAI</p>
     </div>
-</div>
+</footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        console.log("AuroraAI Initialized...");
-        // Simple tab switching logic
-        $('menu[role="tablist"] li a').click(function(e) {
-            e.preventDefault();
-            $('li[role="tab"]').attr('aria-selected', 'false');
-            $(this).parent().attr('aria-selected', 'true');
-            
-            // Just a fun little interaction
-            const tab = $(this).attr('href');
-            if(tab === "#devlog") {
-                $('#tab-content').html("<h3>Project History</h3><p>Started: Nov 2025</p><p>First Leak: Dec 29, 2025 (Websim Discord)</p><p>Pivot to Win95 style: Right now.</p>");
-            } else if (tab === "#faq") {
-                $('#tab-content').html("<p>Check the Help_Topics.hlp window below!</p>");
-            } else {
-                location.reload(); // Reset to default for demo
-            }
-        });
+        // Just a little rebel flair - console message
+        console.log("%cAuroraAI: Living on the edge since 2025", "color: #00ffcc; font-size: 20px; font-weight: bold;");
+        
+        // Simple hover animation for cards
+        $('.section-card').hover(
+            function() { $(this).css('background', '#1a1a1a'); },
+            function() { $(this).css('background', '#111'); }
+        );
     });
 </script>
+
 </body>
 </html>
